@@ -19,29 +19,47 @@
         android:layout_alignParentStart="true">
 
         <GridLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="36dp">
 
             <Button
                 android:text="Undo"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ButtonUndo" />
+                android:id="@+id/ButtonUndo"
+                android:layout_width="65dp"
+                android:layout_row="0"
+                android:layout_column="3" />
 
             <Button
                 android:text="Redo"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ButtonRedo" />
+                android:id="@+id/ButtonRedo"
+                android:layout_width="65dp" />
 
             <Space android:layout_height="wrap_content"
-                android:layout_width="70dp" />
+                android:layout_width="20dp" />
+
+            <Button
+                android:text="L"
+                android:layout_height="wrap_content"
+                android:id="@+id/RotateLeftButton"
+                android:layout_width="30dp" />
+
+            <Button
+                android:text="R"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/RotateRightButton" />
+
+            <Space android:layout_height="wrap_content"
+                android:layout_width="20dp" />
 
             <Button
                 android:text="Clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ButtonClear" />
+
         </GridLayout>
 
         <com.example.michael.doodle.DoodleView
@@ -103,4 +121,5 @@
                 android:layout_width="150dp" />
         </GridLayout>
     </LinearLayout>
+
 </RelativeLayout>

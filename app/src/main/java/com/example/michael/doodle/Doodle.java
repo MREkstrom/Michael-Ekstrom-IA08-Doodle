@@ -22,6 +22,9 @@ public class Doodle extends AppCompatActivity {
         Button clearButton = (Button) findViewById(R.id.ButtonClear);
         Button undoButton = (Button) findViewById(R.id.ButtonUndo);
         Button redoButton = (Button) findViewById(R.id.ButtonRedo);
+        Button leftButton = (Button) findViewById(R.id.RotateLeftButton);
+        Button rightButton = (Button) findViewById(R.id.RotateRightButton);
+
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
