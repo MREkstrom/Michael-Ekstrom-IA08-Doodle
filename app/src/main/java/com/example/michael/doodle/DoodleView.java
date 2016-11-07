@@ -64,9 +64,8 @@ public class DoodleView extends View {
 
     private void initPaint()
     {
-        setColor(_hue);
-        setOpacity(_alpha);
-        setWidth(_width);
+        paths.get(currPath).paint.setColor(Color.HSVToColor(_alpha, new float[] {_hue, 1f, 1f}));
+        paths.get(currPath).paint.setStrokeWidth(_width);
         paths.get(currPath).paint.setAntiAlias(true);
         paths.get(currPath).paint.setStyle(Paint.Style.STROKE);
         paths.get(currPath).paint.setStrokeCap(Paint.Cap.ROUND);
@@ -84,17 +83,14 @@ public class DoodleView extends View {
 
     public void setWidth(float width){
         _width = width;
-        paths.get(currPath).paint.setStrokeWidth(width);
     }
 
     public void setColor(int hue) {
         _hue = hue;
-        paths.get(currPath).paint.setColor(Color.HSVToColor(_alpha, new float[] {_hue, 1f, 1f}));
     }
 
     public void setOpacity(int alpha) {
         _alpha = alpha;
-        paths.get(currPath).paint.setColor(Color.HSVToColor(_alpha, new float[] {_hue, 1f, 1f}));
     }
 
     public int getHue(){
@@ -131,9 +127,12 @@ public class DoodleView extends View {
         switch(motionEvent.getAction()){
             case MotionEvent.ACTION_DOWN:
                 //Move new path to index
+                while (currPath+1 < paths.size() && paths.get(currPath+1) != null)
+                    paths.remove(currPath+1);
+
                 currPath++;
                 paths.add(new PathPaint());
-                initPaint(); //TODO THIS BREAKS IT
+                initPaint();
 
                 paths.get(currPath).path.moveTo(touchX, touchY);
                 break;
@@ -143,8 +142,8 @@ public class DoodleView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 //Make new path, update currpath, ready for next one, clear redo options
-                while (currPath+1 < paths.size() && paths.get(currPath+1) != null)
-                    paths.remove(currPath+1);
+
+
 
                 break;
         }
