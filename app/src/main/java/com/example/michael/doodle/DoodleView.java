@@ -3,8 +3,11 @@ package com.example.michael.doodle;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 import android.util.AttributeSet;
@@ -25,15 +28,21 @@ public class DoodleView extends View {
     private int _hue; //0 to 360
     private int _alpha; //0 to 255
     private float _width; //0 to anything, cap here is 100
+    private int _currRotation;
+
+    private float _myWidth;
+    private float _myHeight;
 
     private class PathPaint{
-        public PathPaint(){
+        public PathPaint(int currRotation){
             path = new Path();
             paint = new Paint();
+            rotation = currRotation;
         }
 
         public Path path;
         public Paint paint;
+        public int rotation;
     }
 
     public DoodleView(Context context) {
@@ -54,11 +63,14 @@ public class DoodleView extends View {
     private void init(AttributeSet attrs, int defStyle){
         paths = new ArrayList<PathPaint>();
         currPath = 0;
-        paths.add(new PathPaint());
 
         _hue = 0;
         _alpha = 255;
         _width = 0f;
+        _currRotation = 0;
+
+        paths.add(new PathPaint(_currRotation));
+
         initPaint();
     }
 
@@ -76,9 +88,18 @@ public class DoodleView extends View {
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        System.out.println("Printing up to " + currPath);
-        for (int i = 0; i <= currPath; i++)
+        for (int i = 0; i <= currPath; i++) {
+
             canvas.drawPath(paths.get(i).path, paths.get(i).paint);
+        }
+    }
+
+    public void setViewWidth(float width){
+        _myWidth = width;
+    }
+
+    public void setViewHeight(float height){
+        _myHeight = height;
     }
 
     public void setWidth(float width){
@@ -93,6 +114,20 @@ public class DoodleView extends View {
         _alpha = alpha;
     }
 
+    public void rotate(int degrees) {
+        _currRotation = degrees;
+        for (PathPaint pp : paths) {
+            //http://stackoverflow.com/questions/6763231/draw-rotated-path-at-particular-point
+            Matrix mMatrix = new Matrix();
+            RectF bounds = new RectF();
+            mMatrix.postRotate(degrees-pp.rotation, _myWidth/2, _myHeight/2);
+            pp.path.transform(mMatrix);
+            pp.rotation = degrees;
+
+        }
+        invalidate();
+    }
+
     public int getHue(){
         return _hue;
     }
@@ -100,7 +135,7 @@ public class DoodleView extends View {
     public void clear(){
         paths = new ArrayList<PathPaint>();
         currPath = 0;
-        paths.add(new PathPaint());
+        paths.add(new PathPaint(_currRotation));
         initPaint();
         invalidate();
     }
@@ -131,7 +166,7 @@ public class DoodleView extends View {
                     paths.remove(currPath+1);
 
                 currPath++;
-                paths.add(new PathPaint());
+                paths.add(new PathPaint(_currRotation));
                 initPaint();
 
                 paths.get(currPath).path.moveTo(touchX, touchY);
