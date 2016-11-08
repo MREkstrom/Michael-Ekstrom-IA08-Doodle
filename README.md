@@ -4,7 +4,7 @@ This repository holds all of the code neccessary to run my doodle project. To ru
 
 The app works as a standard doodle app. The color selection is constrained to a Hue slider, so one can only use fully saturated colors. This gives a slightly juvenille color palette, but this fealt appropriate for a doodle app.
 
-The special features are the undo/redo buttons, as well as the rotate option to their right. This allows you to rotate your current drawings around before drawing more stuff on top of it.
+The special features are the undo/redo buttons, as well as the rotate option to their right. This allows you to rotate your current drawings around before drawing more stuff on top of it. The undo/redo functions will only affect drawing actions, they do not affect changes to the paint style, rotations, or clears. 
 
 The majority of the required code was determined by the provided YouTube tutorials or by analyzing the Android documentation. However, particular help was gained from the following StackOverflow thread, which detailed how to properly rotate a Path.
 
