@@ -18,12 +18,15 @@ public class Doodle extends AppCompatActivity {
         SeekBar hueBar = (SeekBar) findViewById(R.id.HueBar);
         SeekBar brushBar = (SeekBar) findViewById(R.id.BrushBar);
         SeekBar opacityBar = (SeekBar) findViewById(R.id.OpacityBar);
+        SeekBar rotateBar = (SeekBar) findViewById(R.id.RotateBar);
 
         Button clearButton = (Button) findViewById(R.id.ButtonClear);
         Button undoButton = (Button) findViewById(R.id.ButtonUndo);
         Button redoButton = (Button) findViewById(R.id.ButtonRedo);
-        Button leftButton = (Button) findViewById(R.id.RotateLeftButton);
-        Button rightButton = (Button) findViewById(R.id.RotateRightButton);
+        //Button leftButton = (Button) findViewById(R.id.RotateLeftButton);
+        //Button rightButton = (Button) findViewById(R.id.RotateRightButton);
+
+
 
 
         clearButton.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +52,27 @@ public class Doodle extends AppCompatActivity {
                 doodle.redo();
             }
         });
+/*
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                DoodleView doodle = (DoodleView) findViewById(R.id.DoodleView);
+                doodle.setViewWidth(doodle.getWidth());
+                doodle.setViewHeight(doodle.getHeight());
+                doodle.rotate(-5);
+            }
+        });
 
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                DoodleView doodle = (DoodleView) findViewById(R.id.DoodleView);
+                doodle.setViewWidth(doodle.getWidth());
+                doodle.setViewHeight(doodle.getHeight());
+                doodle.rotate(5);
+            }
+        });
+*/
         hueBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -104,6 +127,28 @@ public class Doodle extends AppCompatActivity {
 
                 DoodleView doodle = (DoodleView) findViewById(R.id.DoodleView);
                 doodle.setOpacity(alpha);
+            }
+
+        });
+
+        rotateBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int val = seekBar.getProgress();
+                int rot = (int) (360f*val/100f);
+
+                DoodleView doodle = (DoodleView) findViewById(R.id.DoodleView);
+                doodle.setViewWidth(doodle.getWidth());
+                doodle.setViewHeight(doodle.getHeight());
+                doodle.rotate(rot);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
 
         });
